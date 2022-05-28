@@ -28,4 +28,39 @@ cur.executescript('''
    )
 ''')
 
+data =json.load(open('roster_data.json'))
 
+# insert data / entry is the name of our date entry.
+
+for entry in data:
+    user = entry[0]
+    course = entry [1]
+    instructor = entry[2]
+    #inserting user
+    user_statement = """INSERT OR IGNORE INTO User(name) VALUES( ? )"""
+	SQLparams = (user, )
+	cur.execute(user_statement, SQLparams)
+
+    #inserting course
+    course_statement = """INSERT OR IGNORE INTO Course(title) VALUES( ? )"""
+	SQLparams = (course, )
+	cur.execute(course_statement, SQLparams)
+
+    #Getting user and course id
+	courseID_statement = """SELECT id FROM Course WHERE title = ?"""
+    SQLparams = (course, )
+    cur.execute(courseID_statement. SQLparams)
+    courseID = cur.fetchone()[0]
+
+    userID_statement = """SELECT id FROM User WHERE name =?"""
+    SQLparams = (user, )
+    cur.execute = cur.fetchone()[0]
+
+    #inserting all Entrys
+    member_statement = """INSERT INTO Member(user_id, course_id, role)
+		VALUES(?, ?, ?)"""
+	SQLparams = (userID, courseID, instructor)
+	cur.execute(member_statement, SQLparams)
+
+#saving
+conn.commit()
