@@ -36,6 +36,8 @@ for entry in data:
     user = entry[0]
     course = entry [1]
     instructor = entry[2]
+#here we can direct each string from our JSON to SQL
+
     #inserting user
     user_statement = """INSERT OR IGNORE INTO User(name) VALUES( ? )"""
 	SQLparams = (user, )
@@ -64,3 +66,18 @@ for entry in data:
 
 #saving
 conn.commit()
+
+#testing and obtaining the results
+test_statement = """
+SELECT hex(User.name || Course.title || Member.role) AS X FROM
+    User JOIN Member JOIN Course
+    ON User.id = Member.user_id AND Member.course_id = Course.id
+    ORDER BY X
+"""
+cur.execute(test_statement)
+result = cur.fetchone()
+print('RESULT: ' + str(result))
+
+#Closing the connection
+cur.close()
+conn.close()
