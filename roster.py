@@ -25,15 +25,15 @@ cur.executescript('''
 		PRIMARY KEY(user_id, course_id)
 	)
 ''')
-#Note: if we don't add UNIQUE after "User.name" and "Course.title", 
+#Note: if we don't add UNIQUE after "User.name" and "Course.title",
 #the IGNORE statement won't work and therefore we'll have duplicates
 
 
 #PART 2: DESERIALIZING THE data
 #The JSON data we're going to process is stored in an array form, with each
-#item being also an array of three elements: one corresponding to the username 
+#item being also an array of three elements: one corresponding to the username
 #one corresponding to the course name, and one indicating if the user is instructor
-#None of them has any field title. 
+#None of them has any field title.
 
 filename = "roster_data.json"
 jsondata = open(filename)
